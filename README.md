@@ -11,7 +11,7 @@ Antes de começar, certifique-se de ter Python instalado em sua máquina. Você 
 Para preparar o ambiente do projeto, siga estas etapas:
 
 1. **Exclua os arquivos .gitkeep:**
-   Antes de começar, você precisa excluir os arquivos `.gitkeep` das pastas "video" e "watermark". Esses arquivos são usados apenas para manter o controle de versão das pastas vazias e não são necessários para o funcionamento do projeto.
+   Antes de começar, você precisa excluir os arquivos `.gitkeep` das pastas "video" e "watermark". Esses arquivos são usados apenas para manter o controle de versão das pastas vazias e não são necessários para o funcionamento do projeto. Adicione somente vídeos e imagens em suas respectivas pastas.
 
    ```bash
    rm video/.gitkeep

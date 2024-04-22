@@ -1,2 +1,11 @@
+# Arquivos de vídeo
 *.mp4
-video/*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Arquivos de imagem
+*.png
+*.jpg
+*.jpeg
+*.gif
