@@ -18,7 +18,6 @@ def extension_validation(video, image):
     else:
         print(f"O formato do vídeo {video} ou da imagem {image} não é suportado.")
         return False
-
             
 def apply_watermark(video_names, image_names):
     """Aplica uma marca d'água em vídeos com imagens correspondentes."""
