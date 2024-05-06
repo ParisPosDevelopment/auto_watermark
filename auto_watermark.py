@@ -1,19 +1,20 @@
 import os
 from moviepy.editor import VideoFileClip, ImageClip, CompositeVideoClip
 
-# Definindo os caminhos para os diretórios de vídeo e imagem
-video_path = os.path.abspath("video")
-image_path = os.path.abspath("watermark")
-
 # Extensões suportadas para vídeo e imagem
-video_extensions = ['.mp4','.avi', '.mkv']
-image_extensions = ['.jpg', '.png']
+video_extensions = ['.mp4','.avi', '.mkv', '.mov', '.proxy']
+image_extensions = ['.jpg', '.jpeg', '.png']
+
+def directories_validation(video_path, image_path, render_path):
+	try:
+		for path in [video_path, image_path, render_path]:
+			if not os.path.exists(path):
+				os.makedirs(path)
+		return True
+	except Exception as e:
+		print(f"Erro ao criar os diretórios: {str(e)}")
 
 def extension_validation(video, image):
-	if os.path.exists("video/.gitkeep") or os.path.exists("watermark/.gitkeep"):
-		print("A pasta 'video' ou 'watermark' não deve conter o arquivo '.gitkeep'.")
-		return False
-	
 	"""Verifica se as extensões dos arquivos de vídeo e imagem são suportadas."""
 	video_extension = os.path.splitext(video)[1].lower()
 	image_extension = os.path.splitext(image)[1].lower()
@@ -24,12 +25,15 @@ def extension_validation(video, image):
 	if image_extension not in image_extensions:
 		print(f"O formato da imagem {image} não é suportado.")
 		return False
-	
 	return True
 
-			
-def apply_watermark(video_names, image_names):
-	"""Aplica uma marca d'água em vídeos com imagens correspondentes."""
+def apply_watermark(video_path, image_path, render_path):
+
+	# Listando os arquivos nos diretórios de vídeo e imagem
+	video_names = os.listdir(video_path)
+	image_names = os.listdir(image_path)
+
+	# Aplica uma marca d'água em vídeos com imagens correspondentes.
 	for video in video_names:
 		for image in image_names:
 			if extension_validation(video, image):
@@ -43,13 +47,16 @@ def apply_watermark(video_names, image_names):
 					image_clip = ImageClip(image_file)
 					image_clip = image_clip.set_duration(video_clip.duration)
 					video_with_watermark = CompositeVideoClip([video_clip, image_clip.set_position(('right','top'))])
-					render_path = os.path.abspath("render")
 					render_path = os.path.join(render_path, f"{video_name}_rendered.mp4")
-					video_with_watermark.write_videofile(render_path, codec='libx264')
+					video_with_watermark.write_videofile(render_path, codec='libx264', fps=30, threads=12)
 
-# Listando os arquivos nos diretórios de vídeo e imagem
-video_names = os.listdir(video_path)
-image_names = os.listdir(image_path)
+def main():
+	# Definindo os caminhos para os diretórios de vídeo e imagem
+	video_path = os.path.abspath("video")
+	image_path = os.path.abspath("watermark")
+	render_path = os.path.abspath("render")
 
-# Aplicando a marca d'água nos vídeos
-apply_watermark(video_names, image_names)
+	directories_validation(video_path, image_path, render_path)
+	apply_watermark(video_path, image_path, render_path)
+
+main()

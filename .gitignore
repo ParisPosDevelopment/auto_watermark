@@ -9,3 +9,5 @@
 *.jpg
 *.jpeg
 *.gif
+
+venv
