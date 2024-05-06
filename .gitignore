@@ -11,3 +11,6 @@
 *.gif
 
 venv
+video
+watermark
+render
